@@ -1,58 +1,68 @@
-#Diccionarios al fin de cada valor se tiene que poner , para diferenciar cada clave-valor
+#Mini-proyecto: "Agenda de Contactos"
+#Descripción:
+#Crea una pequeña agenda que permita:
+#Agregar un nuevo contacto (nombre y número de teléfono).
+#Buscar un contacto por su nombre.
+#Mostrar todos los contactos.
+#Eliminar un contacto.
+#Requisitos:
+#Usar un diccionario donde el nombre sea la clave y el número sea el valor..
+#Crear un pequeño menú en consola para elegir las acciones.
 
-person = {
-    "name" : "Karina",
-    "lastname" : "Henao",
-    "age" : 10,
-    "id" : 103592,
-}
+contactos = {"Policia" : "123",
+             "Bomberos" : "456",
+             "Mamá" : "3196164048",
+             "Riwi" : "1035975643"}
 
-House = {
-    "Adress" : "calle 45b",
-    "value" : 1000000000,
-    "owner" : "Karina",
+def updateContacts (contactos):
+    name = input("Ingresar el nombre del contacto: ")
+    tel = input("Ingresar el numero del contacto: ")
 
-}
+    contactos[name] = tel
+    print("Contacto agregado")
+                    
 
-del person["age"]
-person["other"] = "Mariana" #AGregar claves y valores
-print(person)
-for dat,prueba in person.items():
-    print(f"{dat}: {prueba}")
-
-
-
-
-
-
-fruits = ["naranja", "naranja", "naranja","limon","mango","borojo"]
-contFruits = {}
-
-for fru in fruits:
-    if fru in contFruits:
-        contFruits[fru] += 1
+def searchContact(contactos):
+    contact = input("Ingresa el nombre del contacto a buscar: ")
+    if contact in contactos:
+        value = contactos[contact]
+        print(f"El número de {contact} es: {value}")
     else:
-        contFruits[fru] = 1
-
-print(contFruits)
+        print("Contacto ingresado No concontrado")
 
 
+def deleteContact(contactos):
+    contact = input("Ingresa el nombre del contacto a eliminar: ")
+    if contact in contactos:
+        del contactos[contact]
+        print(contactos)
 
 
 
+def showContacts():
+    print(contactos)
 
-paises = {
-    "Colombia": "Bogotá",
-    "Suecia": "Estocolmo",
-    "Argentina": "Buenos Aires",
-    "Venezuela": "Caracas"
-}
+def menu():
+    b = input("Bienvenido a tu agenda de datos: \n"
+    "Ingresa 1 para agregar un contacto:  \n" 
+    "Ingresa 2 para buscar un contacto por nombre: \n" 
+    "Ingresa 3 para mostrar todos los contactos: \n" 
+    "Ingresa 4 para eliminar un contacto: \n"
+    "Ingresa 5 para salir: \n")
+    match b:
+        case "1":
+            updateContacts(contactos)
+            menu() 
+        case "2":
+            searchContact(contactos)
+            menu()
+        case "3":
+            showContacts()
+            menu()
+        case "4":
+            deleteContact(contactos)
+            menu()
+        case "5":
+            exit()
 
-pais = input("Escribe un país: ")
-if pais in paises:
-    print(f"La capital de {pais} es: {paises[pais]}")
-else:
-    print("País no encontrado")
-
-invertCountry = {capital: pais for pais, capital in paises.items()}
-print(invertCountry)
+menu()
