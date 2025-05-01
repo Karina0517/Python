@@ -9,18 +9,20 @@
 #Usar un diccionario donde el nombre sea la clave y el número sea el valor..
 #Crear un pequeño menú en consola para elegir las acciones.
 
-contactos = {"Policia" : "123",
-             "Bomberos" : "456",
-             "Mamá" : "3196164048",
-             "Riwi" : "1035975643"}
+contactsList = []
+contactos = {}
 
-def updateContacts (contactos):
-    name = input("Ingresar el nombre del contacto: ")
-    tel = input("Ingresar el numero del contacto: ")
+def createContacts ():
+    while True:
+        name = input("Ingresar el nombre del contacto: ")
+        tel = input("Ingresar el numero del contacto: ")
 
-    contactos[name] = tel
-    print("Contacto agregado")
-                    
+        contactos = {name:tel}
+        contactsList.append(contactos)
+        print("Contacto agregado")
+        b = input("¿Quieres agregar otro? \n Pulse cualquier tecla para continuar, n para salir")
+        if b == "n" or b =="N":
+            break
 
 def searchContact(contactos):
     contact = input("Ingresa el nombre del contacto a buscar: ")
@@ -40,7 +42,7 @@ def deleteContact(contactos):
 
 
 def showContacts():
-    print(contactos)
+    print(contactsList)
 
 def menu():
     b = input("Bienvenido a tu agenda de datos: \n"
@@ -51,7 +53,7 @@ def menu():
     "Ingresa 5 para salir: \n")
     match b:
         case "1":
-            updateContacts(contactos)
+            createContacts()
             menu() 
         case "2":
             searchContact(contactos)
@@ -66,3 +68,4 @@ def menu():
             exit()
 
 menu()
+
