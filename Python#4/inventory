@@ -1,0 +1,119 @@
+inventory = {}
+
+# Validar entrada numérica (float positivo)
+def valideNumber(mensaje):
+    while True:
+        value = input(mensaje)
+        try:
+            valueF = float(value)
+            if valueF < 0:
+                print("No se permiten valores negativos.")
+                continue
+            return valueF
+        except ValueError:
+            print("Entrada inválida. Debes ingresar un número.")
+
+# Agregar producto
+def addProduct():
+    name = input("Nombre del producto: ").strip()
+    if name in inventory:
+        return False
+    price = valideNumber("Precio del producto: ")
+    cant = valideNumber("Cantidad disponible: ")
+    inventory[name] = (price, cant)
+    return True
+
+# Buscar producto
+def searchProduct():
+    name = input("Nombre del producto a buscar: ").strip()
+    if name in inventory:
+        return name, inventory[name]
+    return None
+
+# Actualizar precio
+def updateProduct():
+    name = input("Nombre del producto a actualizar: ").strip()
+    if name in inventory:
+        nuevoPrecio = valideNumber("Nuevo precio: ")
+        quant = inventory[name][1]
+        inventory[name] = (nuevoPrecio, quant)
+        return True
+    return False
+
+# Eliminar producto
+def deleteProduct():
+    name = input("Nombre del producto a eliminar: ").strip()
+    if name in inventory:
+        del inventory[name]
+        return True
+    return False
+
+# Mostrar inventario
+def showInventory():
+    return inventory
+
+# Calcular valor total
+calculateTotal = lambda precio, quant: precio * quant
+
+def valueTotal():
+    total = 0
+    for price, quant in inventory.values():
+        total += calculateTotal(price, quant)
+    return total
+
+# Menú principal
+def menu():
+    while True:
+        print("\nINVENTARIO SUPERMERCADO BARRIGAS CONTENTAS  \n"
+              "1. Agregar producto\n"
+              "2. Buscar producto\n"
+              "3. Actualizar precio\n"
+              "4. Eliminar producto\n"
+              "5. Mostrar inventario\n"
+              "6. Calcular valor total del inventario\n"
+              "7. Salir")
+
+        opcion = input("Selecciona una opción: ")
+
+        match opcion:
+            case "1":
+                if addProduct():
+                    print("Producto agregado correctamente.")
+                else:
+                    print("El producto ya existe.")
+            case "2":
+                result = searchProduct()
+                if result:
+                    name, (price, quant) = result
+                    print(f"{name} - Precio: ${price:.2f}, Cantidad: {quant}")
+                else:
+                    print("Producto no encontrado.")
+            case "3":
+                if updateProduct():
+                    print("Precio actualizado correctamente.")
+                else:
+                    print("Producto no encontrado.")
+            case "4":
+                if deleteProduct():
+                    print("Producto eliminado correctamente.")
+                else:
+                    print("Producto no encontrado.")
+            case "5":
+                items = showInventory()
+                if not items:
+                    print("Inventario vacío.")
+                else:
+                    print("Inventario actual:")
+                    for name, (price, quant) in items.items():
+                        print(f"- {name}: Precio ${price:.2f}, Cantidad: {quant}")
+            case "6":
+                total = valueTotal()
+                print(f"Valor total del inventario: ${total:.2f}")
+            case "7":
+                print("Saliendo del programa...")
+                break
+            case _:
+                print("Opción inválida. Inténtalo de nuevo.")
+
+# Ejecutar menú
+menu()
