@@ -19,12 +19,27 @@ print(test_calculate_cart_total(cart,0.21))
 
 # 2. Text processing (word count)
 
-    
-
 # 3. Secure password generator
 
+    
+        
 
-# 4. Weather analyzer (temperatures)
 
 
+def analyze_temperatures(tempt):
+    acum = 0
+    l = len(tempt)
+    for i in tempt:
+        acum += i 
+        
+    mini = min(tempt) 
+    maxi = max(tempt)  
+    average = acum/l
+    return average, maxi, mini
+    
+temps = [20, 25, 22, 18, 30]
+average, maxi, mini = analyze_temperatures(temps)
+print(average, maxi, mini)
 # 5. Functional contact book
+
+
